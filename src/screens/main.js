@@ -1,7 +1,43 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Dimensions, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import TeacherCard from '../components/TeacherCard';
+import Carousel from 'react-native-snap-carousel';
+
+const width = Dimensions.get('window').width / 100;
 
 const Main = () => {
+    //teachers data
+    const data = [
+        {
+            id: 1,
+            name: "Nicolas",
+            formation: "université 1",
+            description: "description",
+            profileImage: "https://picsum.photos/200/300",
+        },
+        {
+            id: 2,
+            name: "Pierre",
+            formation: "université 2",
+            description: "description",
+            profileImage: "https://picsum.photos/200/500",
+        },
+        {
+            id: 3,
+            name: "Benji",
+            formation: "université 3",
+            description: "description",
+            profileImage: "https://picsum.photos/200/600",
+        },
+    ]
+
+//function render teacher card component for carousal
+    const renderItem = ({ item, index }) => {
+        return (
+            <TeacherCard info={item} />
+        );
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -19,7 +55,18 @@ const Main = () => {
                 <Text style={styles.title}>Teach'rs favoris</Text>
             </View>
             <View style={styles.body}>
-
+                <View style={styles.carousel}>
+                    <Carousel
+                        data={data}
+                        renderItem={renderItem}
+                        slideStyle={{marginLeft: 15}}
+                        sliderWidth={width * 100}
+                        itemWidth={width * 50}
+                        activeSlideAlignment="start"
+                        inactiveSlideScale={1}
+                        inactiveSlideOpacity={1}
+                    />
+                </View>
             </View>
         </View>
     );
@@ -39,7 +86,8 @@ const styles = StyleSheet.create({
     },
     body: {
         width: '100%',
-        height: '100%',
+        flex: 1,
+        backgroundColor: 'white',
     },
     title: {
         color: "white",
@@ -57,7 +105,12 @@ const styles = StyleSheet.create({
         height: 50,
         tintColor: "white",
     },
-
+    carousel: {
+        width: '100%',
+        flex: 1,
+        marginLeft: 20,
+        marginTop: 45,
+    },
 });
 
 export default Main;
